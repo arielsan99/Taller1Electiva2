@@ -11,7 +11,7 @@ var bills = [
     "numero":"872034",
     "fecha_factura":"2020-6-25",
     "tipo_pago":"contado",
-    "plazo":"",
+    "plazo":"0",
     "valor_total":"7435246"
   },
   {
@@ -34,7 +34,7 @@ for(bill of bills){
   opt.value=bill["numero"]
   opt.text=bill["numero"]
   select.appendChild(opt)
-//  loadAbonos(bill["numero"])
+  loadAbonos(bill)
   for(i in bill){
     var td = document.createElement("td")
     if(i=="valor_total"){
@@ -47,12 +47,21 @@ for(bill of bills){
   }
   body.appendChild(tr)
 }
+  var select = document.getElementById("select_id").value
+  document.getElementById('saldo_id').value="$"+formatear(findBill(select)["valor_total"])
+
 }
 
-function loadAbonos(num) {
+function loadAbonos(bill) {
   var abono = {"numero_factura":"","abonos":"0","total_abonos":"0","fecha_vencimiento":"00-00-00","saldo":""}
-  abono["numero_factura"]=num
-  abono["saldo"]=bills["numero"]
+  abono["numero_factura"]=bill["numero"]
+
+  var fecha = new Date(bill["fecha_factura"])
+  var dias = bill["plazo"]; // Número de días a agregar
+  fecha.setMonth(fecha.getMonth() + parseInt(dias)/30+1);
+  abono["fecha_vencimiento"] = fecha.getFullYear()+"/"+fecha.getMonth()+"/"+fecha.getDate();
+  abono["saldo"]=bill["valor_total"]
+  abonos.push(abono)
 }
 
 function onlyNums(event){
@@ -66,11 +75,30 @@ function onlyNums(event){
 
 function formatear(dato) {
     return dato.replace(/./g, function(c, i, a) {
-      console.log(c);
-  	return i > 0 && c !== "." && (a.length - i) % 2 === 0 ? "," + c : c;
+  	return i > 0 && c !== "." && (a.length - i) % 3 === 0 ? "," + c : c;
       });
   }
 
 function cambiar() {
   var factura = document.getElementById('select_id').value
+  var abono = findAbono(factura)
+
+  document.getElementById('saldo_id').value="$"+formatear(abono["saldo"])
+
+}
+
+function findBill(num) {
+  for (i of bills) {
+    if(num==i["numero"]){
+      return i
+    }
+}
+}
+
+function findAbono(num){
+  for (i of abonos) {
+    if(num==i["numero_factura"]){
+      return i
+    }
+}
 }
