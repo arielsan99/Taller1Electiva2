@@ -22,9 +22,8 @@ var bills = [
     "valor_total":"932937"
   }
   ]
-var abonos = [
 
-]
+var abonos = []
 
 function load(){
 var body = document.getElementById('body_id')
@@ -35,14 +34,25 @@ for(bill of bills){
   opt.value=bill["numero"]
   opt.text=bill["numero"]
   select.appendChild(opt)
+//  loadAbonos(bill["numero"])
   for(i in bill){
     var td = document.createElement("td")
-    var text = document.createTextNode(bill[i]+"")
+    if(i=="valor_total"){
+      var text = document.createTextNode("$"+formatear(bill[i]))
+    }else {
+      var text = document.createTextNode(bill[i]+"")
+    }
     td.appendChild(text)
     tr.appendChild(td)
   }
   body.appendChild(tr)
 }
+}
+
+function loadAbonos(num) {
+  var abono = {"numero_factura":"","abonos":"0","total_abonos":"0","fecha_vencimiento":"00-00-00","saldo":""}
+  abono["numero_factura"]=num
+  abono["saldo"]=bills["numero"]
 }
 
 function onlyNums(event){
@@ -53,9 +63,14 @@ function onlyNums(event){
     var dato = document.getElementById("abono_id")
     dato.value=formatear(dato.value.split(',').join(''))
 }
+
 function formatear(dato) {
     return dato.replace(/./g, function(c, i, a) {
       console.log(c);
   	return i > 0 && c !== "." && (a.length - i) % 2 === 0 ? "," + c : c;
       });
   }
+
+function cambiar() {
+  var factura = document.getElementById('select_id').value
+}
