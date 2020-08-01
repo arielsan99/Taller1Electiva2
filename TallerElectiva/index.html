@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -88,3 +89,95 @@
     </div>
   </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="js/scripts.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="css/styles.css"/>
+    <title></title>
+  </head>
+  <body onload="load()">
+    <div class="container">
+      <div class="col-md-12">
+        <h6 class="text-center display-3">Taller Electiva-II</h6>
+        <div class="row">
+          <table class="table table-striped table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Número Factura</th>
+                <th scope="col">Fecha Factura</th>
+                <th scope="col">Tipo Pago</th>
+                <th scope="col">Plazo</th>
+                <th scope="col">Valor Total</th>
+              </tr>
+            </thead>
+            <tbody id="body_id">
+            </tbody>
+          </table>
+        </div><br>
+        <div class="row">
+          <h4 class="text-dark">Abono a factura</h4>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <h5 class="text-dark">N&uacute;mero Factura</h5>
+          <select class="custom-select" id="select_id">
+
+          </select>
+        </div>
+        <div class="col-md-6">
+          <h5 class="text-dark">Saldo</h5>
+          <input class="form-control" type="text" name="" value="$356.658" disabled>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-6">
+          <h5 class="text-dark">Valor Abono</h5>
+          <input class="form-control" id="abono_id" type="text" onkeypress="onlyNums(event)">
+        </div>
+        <div class="col-md-6">
+          <h5 class="text-dark">Nuevo Saldo</h5>
+          <input class="form-control" type="text" name="" value="$541.265" disabled>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-md-12">
+          <h5 class="text-dark">Observaciones</h5>
+          <textarea name="name" rows="3" class="form-control"></textarea>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class=" col-6 centrar">
+          <button type="button"  class="btn-2 btn btn-light">Realizar Abono</button>
+        </div>
+        <div class="col-6 centrar">
+          <button type="button" class="btn-2 btn btn-light">Cancelar</button>
+        </div>
+      </div>
+      <div class="row ">
+        <div class="col-md-12">
+          <table class="table table-striped table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Número Factura</th>
+                <th scope="col">Abonos</th>
+                <th scope="col">Total Abonos</th>
+                <th scope="col">Fecha Vencimiento</th>
+                <th scope="col">Saldo</th>
+                <th scope="col">Consultar</th>
+              </tr>
+            </thead>
+            <tbody id="body2_id">
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+    </div>
+  </body>
+</html>
+>>>>>>> master
