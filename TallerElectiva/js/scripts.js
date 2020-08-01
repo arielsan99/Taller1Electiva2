@@ -53,7 +53,7 @@ for(bill of bills){
 }
 
 function loadAbonos(bill) {
-  var abono = {"numero_factura":"","abonos":"0","total_abonos":"0","fecha_vencimiento":"00-00-00","saldo":""}
+  var abono = {"numero_factura":"","abonos":[],"total_abonos":"0","fecha_vencimiento":"00-00-00","saldo":"","observaciones":[]}
   abono["numero_factura"]=bill["numero"]
 
   var fecha = new Date(bill["fecha_factura"])
@@ -64,13 +64,29 @@ function loadAbonos(bill) {
   abonos.push(abono)
 }
 
+function abonar() {
+  var factura = document.getElementById('select_id').value
+  var vabono = document.getElementById('abono_id').value.split(',').join('')
+  var nsaldo = document.getElementById('nsaldo_id').value.split(',').join('')
+  var obv = document.getElementById('observ_id').value
+  var abono = findAbono(factura)
+  abono["abonos"].push(vabono)
+  abono["total_abonos"]=parseInt(abono["total_abonos"])+parseInt(vabono)+""
+  abono["saldo"]=parseInt(abono["saldo"])-vabono+""
+  abono["observaciones"].push(obv)
+  cambiar()
+}
+
+function actualizarTablaAbonos(num_factura) {
+//falta aqui
+}
+
 function onlyNums(event){
     const code = window.event ? event.which : event.keyCode;
     if( code < 48 || code > 57 ){
         event.preventDefault();
     }
-    var dato = document.getElementById("abono_id")
-    dato.value=formatear(dato.value.split(',').join(''))
+
 }
 
 function formatear(dato) {
@@ -79,12 +95,27 @@ function formatear(dato) {
       });
   }
 
+function posKeyPress() {
+  var dato = document.getElementById("abono_id")
+  var nsaldo = document.getElementById('nsaldo_id')
+  var numero_factura = document.getElementById('select_id').value
+  var abono = dato.value.split(',').join('')
+  if(abono!=""){
+    dato.value=formatear(abono)
+    var saldo = findAbono(numero_factura)["saldo"]
+    nsaldo.value = "$"+formatear((parseInt(saldo)-abono)+"")
+  }else{
+    nsaldo.value = ""
+  }
+
+}
+
 function cambiar() {
   var factura = document.getElementById('select_id').value
   var abono = findAbono(factura)
-
+  console.log(abono);
   document.getElementById('saldo_id').value="$"+formatear(abono["saldo"])
-
+  cancelar()
 }
 
 function findBill(num) {
@@ -101,4 +132,10 @@ function findAbono(num){
       return i
     }
 }
+}
+
+function cancelar() {
+  document.getElementById('nsaldo_id').value = ""
+  document.getElementById("abono_id").value = ""
+  document.getElementById("observ_id").value = ""
 }
