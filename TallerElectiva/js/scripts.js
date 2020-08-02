@@ -191,7 +191,55 @@ function findBill(num) {
 }
 
 function carteraEdades(num){
+  $("#body3_id").children().remove()
   for (var i = 0; i < abonos.length; i++) {
+    if(num=="361"){
+      if(abonos[i].plazo>num){
+        var abono = findAbono(abonos[i].numero_factura)
+        var body3 = document.getElementById("body3_id")
+        $("#body3_id").children().remove()
+        var fila = document.createElement("tr")
+
+        var td = document.createElement("td")
+        var text = document.createTextNode(abonos[i].numero_factura)
+        td.appendChild(text)
+        fila.appendChild(td)
+
+        var td = document.createElement("td")
+        for(i in abono){
+          if(i=="abonos"){
+            var text = document.createTextNode(abono[i].length)
+            td.appendChild(text)
+            fila.appendChild(td)
+          }else{
+            if(i=="total_abonos"){
+              var td = document.createElement("td")
+
+              var text = document.createTextNode(formatear(abono[i]))
+              td.appendChild(text)
+              fila.appendChild(td)
+            }
+            if (i=="plazo") {
+              var td = document.createElement("td")
+
+              var text = document.createTextNode(abono[i])
+              td.appendChild(text)
+              fila.appendChild(td)
+            }
+            if (i=="saldo") {
+              var td = document.createElement("td")
+
+              var text = document.createTextNode(formatear(abono[i]))
+              td.appendChild(text)
+              fila.appendChild(td)
+            }
+
+
+          }
+        }
+        body3.appendChild(fila)
+      }
+    }
     if(abonos[i].plazo==num){
       var abono = findAbono(abonos[i].numero_factura)
       var body3 = document.getElementById("body3_id")
