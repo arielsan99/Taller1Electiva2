@@ -125,6 +125,11 @@ function findBill(num) {
 }
 }
 
+function carteraEdades(num){
+  alert(num)
+
+}
+
 function findAbono(num){
   for (i of abonos) {
     if(num==i["numero_factura"]){
