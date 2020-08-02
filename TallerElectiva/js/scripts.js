@@ -74,10 +74,43 @@ function abonar() {
   abono["saldo"]=parseInt(abono["saldo"])-vabono+""
   abono["observaciones"].push(obv)
   cambiar()
+  actualizarTablaAbonos(factura)
 }
 
 function actualizarTablaAbonos(num_factura) {
-
+  var body2 = document.getElementById("body2_id")
+  var abono = findAbono(num_factura)
+  var numfac_ta2 = num_factura+"_idt"
+  var fila1=document.getElementById(numfac_ta2)
+  if(!fila1){
+    var fila = document.createElement("tr")
+    fila.id=numfac_ta2
+    for(i in abono){
+      var td = document.createElement("td")
+      if(i=="abonos"){
+        var text = document.createTextNode(abono[i].length)
+        td.id=num_factura+"_abonos_id"
+        td.appendChild(text)
+        fila.appendChild(td)
+      }else if(i=="observaciones"){
+        var a = document.createElement("a")
+        a.href="#"
+        a.innerHTML="<img  src=\"resources/lupa.png\" whidth=\"15px\" height=\"15px\">"
+        td.appendChild(a)
+        fila.appendChild(td)
+      }else{
+        var text = document.createTextNode(abono[i])
+        td.id=num_factura+"_"+i+"_id"
+        td.appendChild(text)
+        fila.appendChild(td)
+      }
+    }
+    body2.appendChild(fila)
+  }else{
+    document.getElementById(num_factura+"_abonos_id").innerHTML=abono["abonos"].length
+    document.getElementById(num_factura+"_total_abonos_id").innerHTML=suma(abono["abonos"])
+    document.getElementById(num_factura+"_saldo_id").innerHTML=abono["saldo"]
+  }
 }
 
 function onlyNums(event){
@@ -112,7 +145,6 @@ function posKeyPress() {
 function cambiar() {
   var factura = document.getElementById('select_id').value
   var abono = findAbono(factura)
-  console.log(abono);
   document.getElementById('saldo_id').value="$"+formatear(abono["saldo"])
   cancelar()
 }
@@ -142,4 +174,12 @@ function cancelar() {
   document.getElementById('nsaldo_id').value = ""
   document.getElementById("abono_id").value = ""
   document.getElementById("observ_id").value = ""
+}
+
+function suma(list) {
+  var sum = 0
+  for(var i of list){
+    sum+=parseInt(i)
+  }
+  return sum
 }
