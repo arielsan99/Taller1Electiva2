@@ -78,7 +78,7 @@ function abonar() {
 }
 
 function actualizarTablaAbonos(num_factura) {
-//falta aqui
+  
 }
 
 function onlyNums(event){
