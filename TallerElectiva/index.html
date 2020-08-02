@@ -92,6 +92,8 @@
           </table>
         </div>
       </div>
+      <br>
+      <br>
       <div align="center" class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Consulta de Cartera por Edades
@@ -101,12 +103,31 @@
           <a class="dropdown-item" onclick="carteraEdades(45)">45 Dias</a>
           <a class="dropdown-item" onclick="carteraEdades(60)">60 Dias</a>
           <a class="dropdown-item" onclick="carteraEdades(90)">90 Dias</a>
-          <a class="dropdown-item" href="#">180 Dias</a>
-          <a class="dropdown-item" href="#">360 Dias</a>
-          <a class="dropdown-item" href="#">Mas de 360 Dias</a>
+          <a class="dropdown-item" onclick="carteraEdades(180)">180 Dias</a>
+          <a class="dropdown-item" onclick="carteraEdades(360)">360 Dias</a>
+          <a class="dropdown-item" onclick="carteraEdades(361)">Mas de 360 Dias</a>
         </div>
       </div>
+      <br>
+      <br>
+      <div class="row ">
+        <div class="col-md-12">
+          <table class="table table-striped table-bordered">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Número Factura</th>
+                <th scope="col">Abonos</th>
+                <th scope="col">Total Abonos</th>
+                <th scope="col">Saldo</th>
+                <th scope="col">PLazo</th>
+              </tr>
+            </thead>
+            <tbody id="body3_id">
 
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <br>
       <br>

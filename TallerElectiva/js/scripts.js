@@ -52,7 +52,7 @@ for(bill of bills){
 }
 
 function loadAbonos(bill) {
-  var abono = {"numero_factura":"","abonos":[],"total_abonos":"0","fecha_vencimiento":"00-00-00","saldo":"","observaciones":[]}
+  var abono = {"numero_factura":"","abonos":[],"total_abonos":"0","fecha_vencimiento":"00-00-00","saldo":"","observaciones":[],"plazo":""}
   abono["numero_factura"]=bill["numero"]
 
   var fecha = new Date(bill["fecha_factura"])
@@ -61,24 +61,44 @@ function loadAbonos(bill) {
   abono["fecha_vencimiento"] = fecha.getFullYear()+"/"+fecha.getMonth()+"/"+fecha.getDate();
   abono["saldo"]=bill["valor_total"]
   abonos.push(abono)
+  abono["plazo"]=bill["plazo"]
 }
 
 function abonar() {
   var factura = document.getElementById('select_id').value
-  var vabono = document.getElementById('abono_id').value.split(',').join('')
-  var nsaldo = document.getElementById('nsaldo_id').value.split(',').join('')
-  var obv = document.getElementById('observ_id').value
-  var abono = findAbono(factura)
-  abono["abonos"].push(vabono)
-  abono["total_abonos"]=parseInt(abono["total_abonos"])+parseInt(vabono)+""
-  abono["saldo"]=parseInt(abono["saldo"])-vabono+""
-  abono["observaciones"].push(obv)
-  cambiar()
-  actualizarTablaAbonos(factura)
-}
+  var vabono = validarVacio('abono_id')
+  if(vabono==true){
+    vabono=document.getElementById('abono_id').value.split(',').join('')
+    var nsaldo = document.getElementById('nsaldo_id').value.split(',').join('')
+
+    if(nsaldo.substr(1,nsaldo.length)<0){
+      alert("No puede pagar mas del saldo")
+    }else{
+      var obv = validarVacio('observ_id')
+      if(obv==true){
+        obv=document.getElementById('observ_id').value
+        var abono = findAbono(factura)
+        abono["abonos"].push(vabono)
+        abono["total_abonos"]=parseInt(abono["total_abonos"])+parseInt(vabono)+""
+        abono["saldo"]=parseInt(abono["saldo"])-vabono+""
+        abono["observaciones"].push(obv)
+        cambiar()
+        actualizarTablaAbonos(factura)
+      }else {
+        alert("Ingrese una observacion del abono")
+
+      }
+    }
+
+  }else{
+    alert("Ingrese el valor del abono")
+  }
+
+  }
 
 function actualizarTablaAbonos(num_factura) {
   var body2 = document.getElementById("body2_id")
+  //body2.align="center"
   var abono = findAbono(num_factura)
   var numfac_ta2 = num_factura+"_idt"
   var fila1=document.getElementById(numfac_ta2)
@@ -97,19 +117,32 @@ function actualizarTablaAbonos(num_factura) {
         a.href="#"
         a.innerHTML="<img  src=\"resources/lupa.png\" whidth=\"15px\" height=\"15px\">"
         td.appendChild(a)
+        td.align="center"
         fila.appendChild(td)
       }else{
-        var text = document.createTextNode(abono[i])
-        td.id=num_factura+"_"+i+"_id"
-        td.appendChild(text)
-        fila.appendChild(td)
+        if(i!="plazo"){
+          if(i=="saldo" || i=="total_abonos"){
+            var text = document.createTextNode(formatear(abono[i]))
+
+            td.appendChild(text)
+            fila.appendChild(td)
+
+          }else {
+            var text = document.createTextNode(abono[i])
+
+            td.appendChild(text)
+            fila.appendChild(td)
+          }
+
+        }
+
       }
     }
     body2.appendChild(fila)
   }else{
     document.getElementById(num_factura+"_abonos_id").innerHTML=abono["abonos"].length
-    document.getElementById(num_factura+"_total_abonos_id").innerHTML=suma(abono["abonos"])
-    document.getElementById(num_factura+"_saldo_id").innerHTML=abono["saldo"]
+    document.getElementById(num_factura+"_total_abonos_id").innerHTML=formatear(suma(abono["abonos"]))
+    document.getElementById(num_factura+"_saldo_id").innerHTML=formatear(abono["saldo"])
   }
 }
 
@@ -158,8 +191,62 @@ function findBill(num) {
 }
 
 function carteraEdades(num){
-  alert(num)
+  for (var i = 0; i < abonos.length; i++) {
+    if(abonos[i].plazo==num){
+      var abono = findAbono(abonos[i].numero_factura)
+      var body3 = document.getElementById("body3_id")
+      $("#body3_id").children().remove()
+      var fila = document.createElement("tr")
 
+      var td = document.createElement("td")
+      var text = document.createTextNode(abonos[i].numero_factura)
+      td.appendChild(text)
+      fila.appendChild(td)
+
+      var td = document.createElement("td")
+      for(i in abono){
+        if(i=="abonos"){
+          var text = document.createTextNode(abono[i].length)
+          td.appendChild(text)
+          fila.appendChild(td)
+        }else{
+          if(i=="total_abonos"){
+            var td = document.createElement("td")
+
+            var text = document.createTextNode(formatear(abono[i]))
+            td.appendChild(text)
+            fila.appendChild(td)
+          }
+          if (i=="plazo") {
+            var td = document.createElement("td")
+
+            var text = document.createTextNode(abono[i])
+            td.appendChild(text)
+            fila.appendChild(td)
+          }
+          if (i=="saldo") {
+            var td = document.createElement("td")
+
+            var text = document.createTextNode(formatear(abono[i]))
+            td.appendChild(text)
+            fila.appendChild(td)
+          }
+
+
+        }
+      }
+      body3.appendChild(fila)
+    }
+
+  }
+}
+
+function validarVacio(id) {
+    var miCampoTexto = document.getElementById(""+id).value;
+    if (miCampoTexto.length == 0) {
+        return false;
+    }
+    return true;
 }
 
 function findAbono(num){
