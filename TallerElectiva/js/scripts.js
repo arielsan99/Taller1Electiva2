@@ -60,6 +60,8 @@ function formatear(dato) {
       });
   }
 =======
+=======
+>>>>>>> a3c327e51f0dad9a34249e0077c0bddacf841663
 
 var bills = [
   {
@@ -201,4 +203,5 @@ function cancelar() {
   document.getElementById("abono_id").value = ""
   document.getElementById("observ_id").value = ""
 }
->>>>>>> a3c327e... actualizacion
+
+>>>>>>> a3c327e51f0dad9a34249e0077c0bddacf841663
