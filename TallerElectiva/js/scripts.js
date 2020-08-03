@@ -120,7 +120,10 @@ function actualizarTablaAbonos(num_factura) {
       	a.src="resources/lupa.png"
         a.addEventListener('click', function() {
       	//alert(num_factura)
-        localStorage.setItem("abono", abono[i]);
+        localStorage.setItem("abono", abono["abonos"]);
+        localStorage.setItem("observaciones", abono["observaciones"]);
+
+
         var myWindow = window.open(  window.location.href = 'detalles.html', "ventana1", "width=400,height=500,scrollbars=NO");
 
       	}, false);
@@ -158,8 +161,10 @@ function actualizarTablaAbonos(num_factura) {
 }
 function detalles(){
   detalles = localStorage.getItem("abono")
-  alert(detalles)
+  detalles2 = localStorage.getItem("observaciones")
+  //alert(detalles)
   document.getElementById("h1detalles").innerHTML=detalles
+  document.getElementById("h2detalles").innerHTML=detalles2
 }
 function onlyNums(event){
     const code = window.event ? event.which : event.keyCode;
