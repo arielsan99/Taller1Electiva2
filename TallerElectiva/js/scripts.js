@@ -120,29 +120,33 @@ function actualizarTablaAbonos(num_factura) {
         td.align="center"
         fila.appendChild(td)
       }else{
-        if(i!="plazo"){
-          if(i=="saldo" || i=="total_abonos"){
-            var text = document.createTextNode(formatear(abono[i]))
+        if(i=="total_abonos"){
+          var text = document.createTextNode(abono[i])
+          td.id=num_factura+"_total_abonos_id"
 
-            td.appendChild(text)
-            fila.appendChild(td)
+          td.appendChild(text)
+          fila.appendChild(td)
+        }else if(i=="saldo"){
+          var text = document.createTextNode(abono[i])
+          td.id=num_factura+"_saldo_id"
 
-          }else {
-            var text = document.createTextNode(abono[i])
+          td.appendChild(text)
+          fila.appendChild(td)
+        }else if(i!="plazo"){
+          var text = document.createTextNode(abono[i])
 
-            td.appendChild(text)
-            fila.appendChild(td)
-          }
-
+          td.appendChild(text)
+          fila.appendChild(td)
         }
 
       }
     }
     body2.appendChild(fila)
   }else{
+    document.getElementById(num_factura+"_total_abonos_id").innerHTML=suma(abono["abonos"])
+
     document.getElementById(num_factura+"_abonos_id").innerHTML=abono["abonos"].length
-    document.getElementById(num_factura+"_total_abonos_id").innerHTML=formatear(suma(abono["abonos"]))
-    document.getElementById(num_factura+"_saldo_id").innerHTML=formatear(abono["saldo"])
+    document.getElementById(num_factura+"_saldo_id").innerHTML=abono["saldo"]
   }
 }
 
