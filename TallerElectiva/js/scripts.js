@@ -1,4 +1,4 @@
-var bills = [
+﻿var bills = [
   {
     "numero":"345345",
     "fecha_factura":"2017-7-21",
@@ -113,9 +113,15 @@ function actualizarTablaAbonos(num_factura) {
         td.appendChild(text)
         fila.appendChild(td)
       }else if(i=="observaciones"){
-        var a = document.createElement("a")
-        a.href="#"
-        a.innerHTML="<img  src=\"resources/lupa.png\" whidth=\"15px\" height=\"15px\">"
+        var a = document.createElement("input")
+      	a.type= 'image'
+      	a.width=15
+      	a.heigth=15
+      	a.src="resources/lupa.png"
+        a.addEventListener('click', function() {
+      	//alert(num_factura)
+            var myWindow = window.open("detalles.html", "ventana1", "width=400,height=500,scrollbars=NO");
+      	}, false);
         td.appendChild(a)
         td.align="center"
         fila.appendChild(td)
@@ -144,12 +150,14 @@ function actualizarTablaAbonos(num_factura) {
     body2.appendChild(fila)
   }else{
     document.getElementById(num_factura+"_total_abonos_id").innerHTML=suma(abono["abonos"])
-
     document.getElementById(num_factura+"_abonos_id").innerHTML=abono["abonos"].length
     document.getElementById(num_factura+"_saldo_id").innerHTML=abono["saldo"]
   }
 }
 
+function detalles(){
+  document.getElementById("h1detalles").innerHTML=abonos
+}
 function onlyNums(event){
     const code = window.event ? event.which : event.keyCode;
     if( code < 48 || code > 57 ){
@@ -157,6 +165,7 @@ function onlyNums(event){
     }
 
 }
+
 
 function formatear(dato) {
     return dato.replace(/./g, function(c, i, a) {
