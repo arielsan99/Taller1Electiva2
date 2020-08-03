@@ -120,7 +120,9 @@ function actualizarTablaAbonos(num_factura) {
       	a.src="resources/lupa.png"
         a.addEventListener('click', function() {
       	//alert(num_factura)
-            var myWindow = window.open("detalles.html", "ventana1", "width=400,height=500,scrollbars=NO");
+        localStorage.setItem("abono", abono[i]);
+        var myWindow = window.open(  window.location.href = 'detalles.html', "ventana1", "width=400,height=500,scrollbars=NO");
+
       	}, false);
         td.appendChild(a)
         td.align="center"
@@ -154,9 +156,10 @@ function actualizarTablaAbonos(num_factura) {
     document.getElementById(num_factura+"_saldo_id").innerHTML=abono["saldo"]
   }
 }
-
 function detalles(){
-  document.getElementById("h1detalles").innerHTML=abonos
+  detalles = localStorage.getItem("abono")
+  alert(detalles)
+  document.getElementById("h1detalles").innerHTML=detalles
 }
 function onlyNums(event){
     const code = window.event ? event.which : event.keyCode;
