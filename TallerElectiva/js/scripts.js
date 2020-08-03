@@ -124,7 +124,7 @@ function actualizarTablaAbonos(num_factura) {
         localStorage.setItem("observaciones", abono["observaciones"]);
 
 
-        var myWindow = window.open(  window.location.href = 'detalles.html', "ventana1", "width=400,height=500,scrollbars=NO");
+        var myWindow = window.open("detalles.html", "ventana1", "width=400,height=500,scrollbars=NO");
 
       	}, false);
         td.appendChild(a)
